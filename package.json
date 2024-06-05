@@ -2,6 +2,7 @@
   "name": "misiri_driver",
   "version": "1.1.0",
   "description": "A javascript driver for misiri-like magnetic strip card readers.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo 'Error: no test specificed'; false"

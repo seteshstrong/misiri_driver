@@ -187,8 +187,10 @@ const assemblePacket = (opcode, data = []) => {
 };
 
 const connectToDevice = () => {
-
     const device =  usb.findByIds(0x0801, 0x0003);
+    if (device === undefined) {
+        throw new Error('device not found');
+    }
 
     device.open();
 
@@ -204,7 +206,7 @@ const connectToDevice = () => {
     deviceInterface.claim();
 
     return { device, deviceInterface };
-}
+};
 
 const { device, deviceInterface } = connectToDevice();
 let connectedToDevice = true;
@@ -215,7 +217,7 @@ function* receivePacket(endpoint) {
     let currentWaiters = [];
     let incoming = [];
     let currentData = [];
-    endpoint.on('data', function (data) {
+    endpoint.on('data', (data) => {
         let head = data[0];
         if ((head & 0x80) != 0x80 && currentData.length == 0) {
             throw new Error('invalid header byte received');
@@ -233,10 +235,10 @@ function* receivePacket(endpoint) {
         }
         currentData = [];
     });
-    endpoint.on('error', function (error) {
+    endpoint.on('error', (error) => {
         throw new Error(error);
     });
-    endpoint.on('end', function (error) {
+    endpoint.on('end', (error) => {
         connectedToDevice = false;
     });
     while (connectedToDevice) {
@@ -291,7 +293,7 @@ const bitStream = data => {
     return {
         raw: data,
         _bitIndex: 0,
-        read: function(ct) {
+        read: (ct) => {
             if (this._bitIndex + ct >= this.raw.length * 8) {
                 return null;
             }
@@ -321,7 +323,7 @@ const bitStream = data => {
             this._bitIndex += ct;
             return value;
         },
-        write: function(ct, value) {
+        write: (ct, value) => {
             let bitMask = 0;
             for (let i = 0; i < ct; ++i) {
                 bitMask |= 0x01 << i;
@@ -344,7 +346,7 @@ const bitStream = data => {
             }
             this._bitIndex += ct;
         },
-        seek: function(ct) {
+        seek: (ct) => {
             this._bitIndex += ct;
             if (this._bitIndex < 0) {
                 this._bitIndex = 0;
@@ -485,7 +487,7 @@ const bitStream = data => {
         return { isoTracks, trackData };
     }
 
-    process.on('SIGINT', function() {    
+    process.on('SIGINT', () => {    
         if (isReading || isWriting) {
             sendControl(assemblePacket('disableRead')).then(() => {
                 isReading = false;
