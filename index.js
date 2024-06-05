@@ -1,5 +1,5 @@
-const usb = require('usb');
-const readline = require('readline');
+import * as usb from 'usb'
+import * as readline from 'readline'
 const readlineInterface = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -194,19 +194,19 @@ const connectToDevice = () => {
 
     console.log(`${device.interfaces.length} interfaces found.`);
 
-    const [ interface ] = device.interfaces;
+    const [ deviceInterface ] = device.interfaces;
 
-    if (interface.isKernelDriverActive()) {
+    if (deviceInterface.isKernelDriverActive()) {
         console.log('detaching device from kernel...');
-        interface.detachKernelDriver();
+        deviceInterface.detachKernelDriver();
         console.log('detached');
     }
-    interface.claim();
+    deviceInterface.claim();
 
-    return { device, interface };
+    return { device, deviceInterface };
 }
 
-const { device, interface } = connectToDevice();
+const { device, deviceInterface } = connectToDevice();
 let connectedToDevice = true;
 
 function* receivePacket(endpoint) {
@@ -357,9 +357,9 @@ const bitStream = data => {
 
 (async () => {
     await resetDevice();
-    console.log(`${interface.endpoints.length} endpoints found.`);
+    console.log(`${deviceInterface.endpoints.length} endpoints found.`);
 
-    const [ inEndpoint ] = interface.endpoints;
+    const [ inEndpoint ] = deviceInterface.endpoints;
 
     const reader = receivePacket(inEndpoint);
     try {

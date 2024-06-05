@@ -1,13 +1,33 @@
 {
   "name": "misiri_driver",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "A javascript driver for misiri-like magnetic strip card readers.",
   "main": "index.js",
-  "dependencies": {
-    "usb": "^1.6.2"
+  "scripts": {
+    "test": "echo 'Error: no test specificed'; false"
   },
-  "devDependencies": {},
-  "scripts": {},
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seteshstrong/misiri_driver.git"
+  },
+  "keywords": [
+    "card",
+    "reader",
+    "writer",
+    "magnetic",
+    "stripe",
+    "javascript",
+    "node",
+    "misiri",
+    "MSX"
+  ],
+  "author": "Setesh Saerai Strong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seteshstrong/misiri_driver/issues"
+  },
+  "homepage": "https://github.com/seteshstrong/misiri_driver#readme",
+  "dependencies": {
+    "usb": "^2.13.0"
+  }
 }
