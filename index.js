@@ -198,11 +198,11 @@ const connectToDevice = () => {
 
     const [ deviceInterface ] = device.interfaces;
 
-    if (deviceInterface.isKernelDriverActive()) {
+/*     if (deviceInterface.isKernelDriverActive()) {
         console.log('detaching device from kernel...');
         deviceInterface.detachKernelDriver();
         console.log('detached');
-    }
+    } */
     deviceInterface.claim();
 
     return { device, deviceInterface };
