@@ -178,7 +178,7 @@ const outbound = {
     'getParameter': '1ba2',
     'getDeviceModel': '1b74',
     'setParameter': '1ba1',
-    'enableWrite': '1b6e1b73',
+    'enableWrite': '1b6e1b73', // ALERT! Where is 'disableWrite' and why is this opcode 2x the usual length?
 };
 
 const assemblePacket = (opcode, data = []) => {
